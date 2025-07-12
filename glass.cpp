@@ -34,7 +34,6 @@
 
 static UINT ENABLE = 1;
 static constexpr UINT AUTO = 0; // DWMSBT_AUTO
-static constexpr UINT NONE = 1; // DWMSBT_NONE
 static constexpr UINT MAINWINDOW = 2; // DWMSBT_MAINWINDOW
 static constexpr UINT TRANSIENTWINDOW = 3; // DWMSBT_TRANSIENTWINDOW
 static constexpr UINT TABBEDWINDOW = 4; // DWMSBT_TABBEDWINDOW
