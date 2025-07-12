@@ -94,6 +94,8 @@ struct Settings{
     BOOL CaptionRainbowFlag = FALSE;
     BOOL BorderRainbowFlag = FALSE;
 
+    BYTE BlurOpacity = 0xCC;
+
     enum BACKGROUNDTYPE
     {
         Default,
@@ -1061,7 +1063,8 @@ void EnableBlurBehind(HWND hWnd)
         DeleteObject(hRgn);
 
         accent.AccentState = ACCENT_STATE_ENABLE_ACRYLICBLURBEHIND;
-        accent.GradientColor = g_settings.AccentBlurBehindClr;
+        accent.GradientColor = (g_settings.BlurOpacity << 24) |
+            (g_settings.AccentBlurBehindClr & 0x00FFFFFF);
 
         attrib.Attrib = WCA_ACCENT_POLICY;
         attrib.pvData = &accent;
@@ -1617,6 +1620,10 @@ void LoadSettings(void)
     g_settings.TextAlphaBlend = Wh_GetIntSetting(L"TextAlphaBlend");
     if(g_settings.TextAlphaBlend)
         TextRenderingHook();
+
+    g_settings.BlurOpacity = Wh_GetIntSetting(L"BlurOpacity");
+    if(g_settings.BlurOpacity < 0 || g_settings.BlurOpacity > 255)
+        g_settings.BlurOpacity = 0xCC;
 
     LPCWSTR pszStyle = Wh_GetStringSetting(L"type");
     if (0 == wcscmp(pszStyle, L"acrylicblur"))
